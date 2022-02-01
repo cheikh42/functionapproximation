@@ -1,6 +1,8 @@
+from py_compile import main 
 from sklearn.model_selection import train_test_split
 import torch.nn.functional as F
 from torch import nn
+
 
 
 class NN0_0(nn.Module):
@@ -146,10 +148,25 @@ class NN1_F_D_4_ReLu(nn.Module):
 
         return x
 
+class NN0_F_S(nn.Module):
+    """
+    1 hidden layers each has 50 neurons
+    """
 
+    def __init__(self, input_features=2, h1=50):
+        super().__init__()
+        self.layer1 = nn.Linear(input_features, h1)
+        self.output = nn.Linear(h1, 1)
+
+    def forward(self, x):
+        x = F.relu(self.layer1(x))
+        x = self.output(x)
+        return x
+
+    
 class NN1_F_S(nn.Module):
     """
-    2 hidden layers each has 50 neurons
+    2 hidden layers each has 50 neurons by default
     """
 
     def __init__(self, input_features=2, h1=50, h2=50):
@@ -163,3 +180,4 @@ class NN1_F_S(nn.Module):
         x = F.relu(self.layer2(x))
         x = self.output(x)
         return x
+ 
